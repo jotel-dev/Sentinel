@@ -3,7 +3,12 @@ module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jest-environment-jsdom',
   rootDir: '.',
-  testMatch: ['<rootDir>/apps/dashboard/**/*.spec.tsx', '<rootDir>/apps/dashboard/**/*.spec.ts'],
+  testMatch: [
+    '<rootDir>/apps/dashboard/**/*.spec.tsx',
+    '<rootDir>/apps/dashboard/**/*.spec.ts',
+    '<rootDir>/apps/web/**/*.spec.tsx',
+    '<rootDir>/apps/web/**/*.spec.ts',
+  ],
   transform: {
     '^.+\\.(ts|tsx)$': ['ts-jest', {
       tsconfig: {
