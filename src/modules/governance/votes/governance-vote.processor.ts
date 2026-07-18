@@ -2,7 +2,6 @@ import { Logger } from '../../../utils/logger';
 import { GovernanceVoteRepository } from './governance-vote.repository';
 import { VoteMonitoringResult } from './interfaces';
 import { IGovernanceVoteProcessor } from './interfaces/governance-vote-service.interface';
-import { VoteOutcome, ProposalImpact, AlertSeverity } from './enums';
 import { generateAlertForOutcome } from './alerts/alert-generator.util';
 
 export class GovernanceVoteProcessor implements IGovernanceVoteProcessor {

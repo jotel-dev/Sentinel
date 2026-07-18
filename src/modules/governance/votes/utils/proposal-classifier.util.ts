@@ -52,10 +52,7 @@ const CLASSIFICATION_RULES: Array<{
   },
 ];
 
-export function classifyProposal(
-  description: string,
-  title: string,
-): ProposalClassification {
+export function classifyProposal(description: string, title: string): ProposalClassification {
   const text = `${title} ${description}`.toLowerCase();
 
   for (const rule of CLASSIFICATION_RULES) {

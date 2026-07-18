@@ -15,35 +15,41 @@ export interface AlertData {
 }
 
 const OUTCOME_ALERT_MAP: Record<VoteOutcome, (data: AlertData) => AlertData | null> = {
-  [VoteOutcome.Passed]: (data) => ({
+  [VoteOutcome.Passed]: data => ({
     ...data,
     alertType: 'PROPOSAL_PASSED',
-    severity: data.impact === ProposalImpact.SecurityRelated ? AlertSeverity.Critical : AlertSeverity.High,
+    severity:
+      data.impact === ProposalImpact.SecurityRelated
+        ? AlertSeverity.Critical
+        : AlertSeverity.High,
     outcome: VoteOutcome.Passed,
     message: `Proposal "${data.proposalTitle}" has passed voting`,
   }),
-  [VoteOutcome.Rejected]: (data) => ({
+  [VoteOutcome.Rejected]: data => ({
     ...data,
     alertType: 'PROPOSAL_REJECTED',
     severity: AlertSeverity.Medium,
     outcome: VoteOutcome.Rejected,
     message: `Proposal "${data.proposalTitle}" has been rejected`,
   }),
-  [VoteOutcome.Executed]: (data) => ({
+  [VoteOutcome.Executed]: data => ({
     ...data,
     alertType: 'PROPOSAL_EXECUTED',
-    severity: data.impact === ProposalImpact.SecurityRelated ? AlertSeverity.Critical : AlertSeverity.High,
+    severity:
+      data.impact === ProposalImpact.SecurityRelated
+        ? AlertSeverity.Critical
+        : AlertSeverity.High,
     outcome: VoteOutcome.Executed,
     message: `Proposal "${data.proposalTitle}" has been executed`,
   }),
-  [VoteOutcome.Expired]: (data) => ({
+  [VoteOutcome.Expired]: data => ({
     ...data,
     alertType: 'PROPOSAL_EXPIRED',
     severity: AlertSeverity.Low,
     outcome: VoteOutcome.Expired,
     message: `Proposal "${data.proposalTitle}" has expired without execution`,
   }),
-  [VoteOutcome.Cancelled]: (data) => ({
+  [VoteOutcome.Cancelled]: data => ({
     ...data,
     alertType: 'PROPOSAL_CANCELLED',
     severity: AlertSeverity.Low,

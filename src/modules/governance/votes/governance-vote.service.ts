@@ -4,30 +4,12 @@ import { ProposalRepository } from '../proposals/ProposalRepository';
 import { ProposalDetector } from '../proposals/ProposalDetector';
 import { ProposalState } from '../proposals/types';
 import { GovernanceVoteRepository } from './governance-vote.repository';
-import { VoteOutcome, ProposalType, ProposalImpact } from './enums';
-import {
-  IGovernanceVoteService,
-  VoteMonitoringResult,
-  ProposalVoteData,
-} from './interfaces';
+import { VoteOutcome } from './enums';
+import { VoteOutcomeEntity } from './entities/vote-outcome.entity';
+import { IGovernanceVoteService, VoteMonitoringResult, ProposalVoteData } from './interfaces';
 import { GovernanceVoteConfig } from './interfaces/governance-vote-config.interface';
 import { classifyProposal } from './utils/proposal-classifier.util';
 
-const GOVERNOR_ABI = [
-  'function state(uint256 proposalId) external view returns (uint8)',
-  'function proposals(uint256 proposalId) external view returns (uint256 id, address proposer, uint256 eta, uint256 startBlock, uint256 endBlock, uint256 forVotes, uint256 againstVotes, uint256 abstainVotes, bool canceled, bool executed)',
-];
-
-const STATE_MAP: Record<number, ProposalState> = {
-  0: ProposalState.Pending,
-  1: ProposalState.Active,
-  2: ProposalState.Canceled,
-  3: ProposalState.Defeated,
-  4: ProposalState.Succeeded,
-  5: ProposalState.Queued,
-  6: ProposalState.Expired,
-  7: ProposalState.Executed,
-};
 
 const STATE_TO_OUTCOME_MAP: Record<ProposalState, VoteOutcome> = {
   [ProposalState.Pending]: VoteOutcome.Pending,
@@ -273,7 +255,7 @@ export class GovernanceVoteService implements IGovernanceVoteService {
   }
 
   private votesChanged(
-    existingOutcome: any,
+    existingOutcome: VoteOutcomeEntity | null,
     currentVotes: { forVotes: string; againstVotes: string; abstainVotes: string },
   ): boolean {
     if (!existingOutcome) {
@@ -289,9 +271,9 @@ export class GovernanceVoteService implements IGovernanceVoteService {
 
   private calculateParticipationPercentage(
     totalVotes: string,
-    existingOutcome: any,
+    existingOutcome: VoteOutcomeEntity | null,
   ): number | undefined {
-    if (!existingOutcome.totalVotes || existingOutcome.totalVotes === '0') {
+    if (!existingOutcome || !existingOutcome.totalVotes || existingOutcome.totalVotes === '0') {
       return undefined;
     }
 

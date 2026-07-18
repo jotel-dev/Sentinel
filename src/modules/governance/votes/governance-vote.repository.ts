@@ -17,9 +17,7 @@ export class GovernanceVoteRepository {
 
   // ─── Vote Outcomes ───────────────────────────────────────────────────────────────
 
-  async upsertVoteOutcome(
-    dto: CreateVoteOutcomeDto,
-  ): Promise<VoteOutcomeEntity> {
+  async upsertVoteOutcome(dto: CreateVoteOutcomeDto): Promise<VoteOutcomeEntity> {
     const existing = await this.voteOutcomeRepo.findOne({
       where: { proposalId: dto.proposalId, chainId: dto.chainId },
     });
@@ -83,10 +81,14 @@ export class GovernanceVoteRepository {
       qb.andWhere('vo.proposalImpact = :proposalImpact', { proposalImpact: query.proposalImpact });
     }
     if (query.fromVotingEndedAt) {
-      qb.andWhere('vo.votingEndedAt >= :fromVotingEndedAt', { fromVotingEndedAt: query.fromVotingEndedAt });
+      qb.andWhere('vo.votingEndedAt >= :fromVotingEndedAt', {
+        fromVotingEndedAt: query.fromVotingEndedAt,
+      });
     }
     if (query.toVotingEndedAt) {
-      qb.andWhere('vo.votingEndedAt <= :toVotingEndedAt', { toVotingEndedAt: query.toVotingEndedAt });
+      qb.andWhere('vo.votingEndedAt <= :toVotingEndedAt', {
+        toVotingEndedAt: query.toVotingEndedAt,
+      });
     }
     if (query.processed !== undefined) {
       qb.andWhere('vo.processed = :processed', { processed: query.processed });

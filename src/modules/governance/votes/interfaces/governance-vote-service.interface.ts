@@ -1,5 +1,4 @@
 import { VoteMonitoringResult, ProposalVoteData } from './vote-monitoring-result.interface';
-import { GovernanceVoteConfig } from './governance-vote-config.interface';
 
 export interface IGovernanceVoteService {
   monitorProposals(): Promise<VoteMonitoringResult[]>;

@@ -1,4 +1,11 @@
-import { Entity, PrimaryGeneratedColumn, Column, Index, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  Index,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { VoteOutcome } from '../enums/vote-outcome.enum';
 import { ProposalType } from '../enums/proposal-type.enum';
 import { ProposalImpact } from '../enums/proposal-impact.enum';
@@ -73,7 +80,13 @@ export class VoteOutcomeEntity {
   @Column({ name: 'veto_votes', default: '0' })
   vetoVotes!: string;
 
-  @Column({ name: 'participation_percentage', type: 'decimal', precision: 5, scale: 2, nullable: true })
+  @Column({
+    name: 'participation_percentage',
+    type: 'decimal',
+    precision: 5,
+    scale: 2,
+    nullable: true,
+  })
   participationPercentage?: number;
 
   @Column({ name: 'proposal_link', nullable: true })
